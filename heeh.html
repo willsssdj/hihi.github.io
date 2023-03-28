@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>聊天对话框</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			background-color: #f0f0f0;
+		}
+		.chatbox {
+			width: 400px;
+			height: 500px;
+			background-color: white;
+			border: 2px solid #ccc;
+			border-radius: 5px;
+			padding: 10px;
+			margin: 20px auto;
+			overflow: auto;
+		}
+		.chatbox .message {
+			margin-bottom: 10px;
+		}
+		.chatbox .message .from {
+			font-weight: bold;
+			color: blue;
+			margin-right: 5px;
+		}
+		.chatbox .message .time {
+			font-size: 0.8em;
+			color: gray;
+			margin-left: 5px;
+		}
+		.chatbox .message .text {
+			margin-left: 20px;
+			padding: 5px;
+			background-color: #f2f2f2;
+			border-radius: 5px;
+			display: inline-block;
+		}
+		.chatbox input[type=text] {
+			width: 100%;
+			border: 1px solid #ccc;
+			padding: 10px;
+			box-sizing: border-box;
+			border-radius: 5px;
+			margin-top: 10px;
+		}
+		.chatbox button {
+			background-color: blue;
+			color: white;
+			border: none;
+			padding: 10px;
+			border-radius: 5px;
+			margin-top: 10px;
+			cursor: pointer;
+		}
+	</style>
+</head>
+<body>
+	<h1>聊天对话框</h1>
+	<div class="chatbox">
+
+		<input type="text" id="message-input" placeholder="Type your message...">
+		<button id="send-button">Send</button>
+	</div>
+
+	<script>
+		// JavaScript 代码
+		// 获取发送按钮和消息输入框元素
+		const sendButton = document.getElementById('send-button');
+		const messageInput = document.getElementById('message-input');
+
+		// 在点击发送按钮时，创建一个新的消息元素并添加到聊天对话框中
+		sendButton.addEventListener('click', () => {
+			const messageText = messageInput.value;
+			if (messageText !== '') {
+				const message = document.createElement('div');
+				message.classList.add('message');
+				message.innerHTML = `
+					<span class="from">Me:</span>
+					<span class="time">${getTime()}</span>
+					<span class="text">${messageText}</span>
+				`;
+				const chatbox = document.querySelector('.chatbox');
+				chatbox.insertBefore(message, messageInput);
+				messageInput.value = '';
+			}
+		});
+
+		// 获取当前时间的函数
+		function getTime() {
+			const date = new Date();
+			let hours = date.getHours();
+			let minutes = date.getMinutes();
+			hours = (hours < 10) ? '0' + hours : hours;
+			minutes = (minutes < 10) ? '0' + minutes : minutes;
+			return `${hours}:${minutes}`;
+		}
+	</script>
+</body>
+</html>
